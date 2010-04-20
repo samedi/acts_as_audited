@@ -49,6 +49,10 @@ To record a user in the audits outside of a web request, you can use +as_user+:
       # Perform changes on audited models
     end
 
+== Changes by Michael Siebert
+
+To include some extra data in the audit model itself (IP address, subdomains in multi-tenancy-apps, etc.), add the needed fields to the audits table and provide a controller instance method additional_audit_attributes which returns a Hash with all the extra attributes.
+
 == Caveats
 
 If your model declares +attr_accessible+ after +acts_as_audited+, you need to set <tt>:protect</tt> to false. acts_as_audited uses +attr_protected+ internally to prevent malicious users from unassociating your audits, and Rails does not allow both +attr_protected+ and +attr_accessible+. It will default to false if +attr_accessible+ is called before +acts_as_audited+, but needs to be explicitly set if it is called after.

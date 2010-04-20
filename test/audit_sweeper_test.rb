@@ -14,6 +14,7 @@ class AuditsController < ActionController::Base
 private
   attr_accessor :current_user
   attr_accessor :custom_user
+  attr_accessor :additional_audit_attributes
 end
 AuditsController.view_paths = [File.dirname(__FILE__)]
 ActionController::Routing::Routes.draw {|m| m.connect ':controller/:action/:id' }
@@ -36,5 +37,11 @@ class AuditsControllerTest < ActionController::TestCase
     lambda { post :audit }.should change { Audit.count }
     assigns(:company).audits.last.user.should == user
     AuditSweeper.current_user_method = :current_user
+  end
+
+  should "use #additional_audit_attributes if set" do
+    @controller.send(:additional_audit_attributes=, {:some_attribute => 'some value'})
+    lambda { post :audit }.should change { Audit.count }
+    assigns(:company).audits.last.some_attribute.should == 'some value'
   end
 end
