@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(:version => 0) do
   create_table :audits, :force => true do |t|
     t.column :auditable_id, :integer
     t.column :auditable_type, :string
-    t.column :auditable_parent_id, :integer
-    t.column :auditable_parent_type, :string
+    t.column :associated_id, :integer
+    t.column :associated_type, :string
     t.column :user_id, :integer
     t.column :user_type, :string
     t.column :username, :string
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
   
   add_index :audits, [:auditable_id, :auditable_type], :name => 'auditable_index'
-  add_index :audits, [:auditable_parent_id, :auditable_parent_type], :name => 'auditable_parent_index'
+  add_index :audits, [:associated_id, :associated_type], :name => 'associated_index'
   add_index :audits, [:user_id, :user_type], :name => 'user_index'
   add_index :audits, :created_at  
 end
