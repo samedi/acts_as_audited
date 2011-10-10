@@ -54,7 +54,7 @@ class Audit < ActiveRecord::Base
 
   def revision
     clazz = auditable_type.constantize
-    returning clazz.find_by_id(auditable_id) || clazz.new do |m|
+    (clazz.find_by_id(auditable_id) || clazz.new).tap do |m|
       Audit.assign_revision_attributes(m, self.class.reconstruct_attributes(ancestors).merge({:version => version}))
     end
   end

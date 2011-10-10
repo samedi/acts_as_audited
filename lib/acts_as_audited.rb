@@ -181,7 +181,7 @@ module CollectiveIdea #:nodoc:
         protected
 
         def revision_with(attributes)
-          returning self.dup do |revision|
+          self.dup.tap do |revision|
             revision.send :instance_variable_set, '@attributes', self.attributes_before_type_cast
             Audit.assign_revision_attributes(revision, attributes)
 
@@ -283,7 +283,7 @@ module CollectiveIdea #:nodoc:
         def without_auditing(&block)
           auditing_was_enabled = auditing_enabled
           disable_auditing
-          returning(block.call) { enable_auditing if auditing_was_enabled }
+          (block.call).tap { enable_auditing if auditing_was_enabled }
         end
 
         def disable_auditing
