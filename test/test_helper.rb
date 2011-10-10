@@ -1,7 +1,6 @@
 ENV["RAILS_ENV"] = "test"
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'rubygems'
-require 'multi_rails_init'
 require 'active_record'
 require 'active_record/version'
 require 'active_record/fixtures'
