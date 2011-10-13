@@ -220,7 +220,9 @@ module CollectiveIdea #:nodoc:
         end
 
         def audit_destroy
-          write_audit(:action => 'destroy', :changes => audited_attributes, :comment => audit_comment)
+          unless new_record?
+            write_audit(:action => 'destroy', :changes => audited_attributes, :comment => audit_comment)
+          end
         end
 
         def write_audit(attrs)
