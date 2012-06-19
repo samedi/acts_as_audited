@@ -29,9 +29,8 @@ class Audit < ActiveRecord::Base
   # for background operations that require audit information.
   def self.as_user(user, &block)
     Thread.current[:acts_as_audited_user] = user
-
     yield
-
+  ensure
     Thread.current[:acts_as_audited_user] = nil
   end
 
